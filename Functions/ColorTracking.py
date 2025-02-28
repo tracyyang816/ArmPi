@@ -35,26 +35,26 @@ def setTargetColor(target_color):
     __target_color = target_color
     return (True, ())
 
-# 找出面积最大的轮廓
-# 参数为要比较的轮廓的列表
+# find the largest contour
+# param is a list of all contours for comparison
 def getAreaMaxContour(contours):
     contour_area_temp = 0
     contour_area_max = 0
     area_max_contour = None
 
-    for c in contours:  # 历遍所有轮廓
-        contour_area_temp = math.fabs(cv2.contourArea(c))  # 计算轮廓面积
+    for c in contours:  # iterate through all contours 
+        contour_area_temp = math.fabs(cv2.contourArea(c))  # calcualte the aread size
         if contour_area_temp > contour_area_max:
             contour_area_max = contour_area_temp
-            if contour_area_temp > 300:  # 只有在面积大于300时，最大面积的轮廓才是有效的，以过滤干扰
+            if contour_area_temp > 300:  # filter out areas smaller than 300
                 area_max_contour = c
 
-    return area_max_contour, contour_area_max  # 返回最大的轮廓
+    return area_max_contour, contour_area_max  # return the largest contour
 
-# 夹持器夹取时闭合的角度
+# gripper angle when it's gripping
 servo1 = 500
 
-# 初始位置
+# initial position ?
 def initMove():
     Board.setBusServoPulse(1, servo1 - 50, 300)
     Board.setBusServoPulse(2, 500, 500)
@@ -66,7 +66,7 @@ def setBuzzer(timer):
     time.sleep(timer)
     Board.setBuzzer(0)
 
-#设置扩展板的RGB灯颜色使其跟要追踪的颜色一致
+# Set the RGB light color of the expansion board to match the color to be tracked
 def set_rgb(color):
     if color == "red":
         Board.RGB.setPixelColor(0, Board.PixelColor(255, 0, 0))
@@ -96,7 +96,7 @@ detect_color = 'None'
 action_finish = True
 start_pick_up = False
 start_count_t1 = True
-# 变量重置
+# reset variables
 def reset():
     global count
     global track
@@ -157,7 +157,8 @@ rotation_angle = 0
 unreachable = False
 world_X, world_Y = 0, 0
 world_x, world_y = 0, 0
-# 机械臂移动线程
+
+# Arm movement route
 def move():
     global rect
     global track
@@ -173,7 +174,7 @@ def move():
     global center_list, count
     global start_pick_up, first_move
 
-    # 不同颜色木快放置坐标(x, y, z)
+    # coordinates for goal location (x, y, z) for each color
     coordinate = {
         'red':   (-15 + 0.5, 12 - 0.5, 1.5),
         'green': (-15 + 0.5, 6 - 0.5,  1.5),
@@ -181,11 +182,11 @@ def move():
     }
     while True:
         if __isRunning:
-            if first_move and start_pick_up: # 当首次检测到物体时               
+            if first_move and start_pick_up: # first time an object is detected               
                 action_finish = False
                 set_rgb(detect_color)
                 setBuzzer(0.1)               
-                result = AK.setPitchRangeMoving((world_X, world_Y - 2, 5), -90, -90, 0) # 不填运行时间参数，自适应运行时间
+                result = AK.setPitchRangeMoving((world_X, world_Y - 2, 5), -90, -90, 0) # operation time is not set, adapted
                 if result == False:
                     unreachable = True
                 else:
@@ -194,7 +195,7 @@ def move():
                 start_pick_up = False
                 first_move = False
                 action_finish = True
-            elif not first_move and not unreachable: # 不是第一次检测到物体
+            elif not first_move and not unreachable: # not the first time object is dtected 
                 set_rgb(detect_color)
                 if track: # 如果是跟踪阶段
                     if not __isRunning: # 停止以及退出标志位检测
@@ -281,7 +282,7 @@ def move():
                 time.sleep(1.5)
             time.sleep(0.01)
 
-# 运行子线程
+# sub-operation in threads
 th = threading.Thread(target=move)
 th.setDaemon(True)
 th.start()
@@ -317,7 +318,8 @@ def run(img):
      
     frame_resize = cv2.resize(img_copy, size, interpolation=cv2.INTER_NEAREST)
     frame_gb = cv2.GaussianBlur(frame_resize, (11, 11), 11)
-    #如果检测到某个区域有识别到的物体，则一直检测该区域直到没有为止
+
+    # if an roi(region of interest) has object detected, keep monitoring it no object is detected no more
     if get_roi and start_pick_up:
         get_roi = False
         frame_gb = getMaskROI(frame_gb, roi, size)    
