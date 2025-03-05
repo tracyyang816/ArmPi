@@ -31,10 +31,10 @@ if __name__ == '__main__':
         if img is not None:
             frame = img.copy()
             Frame = perception_mod.process_frame(frame)
-            control_mod.move()        
             cv2.imshow('Frame', Frame)
             key = cv2.waitKey(1)
             if key == 27:
                 break
+            control_mod.move()
     my_camera.camera_close()
     cv2.destroyAllWindows()
