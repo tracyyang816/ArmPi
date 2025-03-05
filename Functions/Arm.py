@@ -87,3 +87,16 @@ class Arm():
             Board.RGB.setPixelColor(0, Board.PixelColor(0, 0, 0))
             Board.RGB.setPixelColor(1, Board.PixelColor(0, 0, 0))
             Board.RGB.show()
+    
+    def reset(self):
+        self.count = 0
+        self._stop = False
+        self.track = False
+        self.get_roi = False
+        self.center_list = []
+        self.first_move = True
+        self.__target_color = ()
+        self.detect_color = 'None'
+        self.action_finish = True
+        self.start_pick_up = False
+        self.start_count_t1 = True
