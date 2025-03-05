@@ -5,6 +5,9 @@ from ArmIK.Transform import *
 from ArmIK.ArmMoveIK import *
 from CameraCalibration.CalibrationConfig import *
 
+
+AK = ArmIK()
+
 class Arm():
     def __init__(self):
         self.rect = None 

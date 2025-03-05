@@ -6,6 +6,8 @@ from CameraCalibration.CalibrationConfig import *
 
 import HiwonderSDK.Board as Board
 
+AK = ArmIK()
+
 class Control():
     def __init__(self, arm):
         self.arm = arm
