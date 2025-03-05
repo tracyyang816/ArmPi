@@ -16,6 +16,7 @@ class Perception():
         self.target_color = target_color
         self.arm = arm
         self.size = (640, 480)
+        self.start_count_t1 = True
 
     def set_targetColor(self, target_color):
         self.target_color = target_color
@@ -36,6 +37,7 @@ class Perception():
 
     
     def process_frame(self, img):
+        print("processing")
         img_copy = img.copy()
         img_h, img_w = img.shape[:2]
         cv2.line(img, (0, int(img_h / 2)), (img_w, int(img_h / 2)), (0, 0, 200), 1)
@@ -49,7 +51,7 @@ class Perception():
 
         # if an roi(region of interest) has object detected, keep monitoring it no object is detected no more
         if self.arm.get_roi and self.arm.start_pick_up:
-            get_roi = False
+            self.get_roi = False
             frame_gb = getMaskROI(frame_gb, roi, self.size)    
         
         frame_lab = cv2.cvtColor(frame_gb, cv2.COLOR_BGR2LAB)  # translate the image to "lab" space 
@@ -89,20 +91,20 @@ class Perception():
                     if distance < 0.3:
                         self.arm.center_list.extend((world_x, world_y))
                         count += 1
-                        if start_count_t1:
-                            start_count_t1 = False
+                        if self.start_count_t1:
+                            self.start_count_t1 = False
                             t1 = time.time()
                         if time.time() - t1 > 1.5:
                             self.arm.rotation_angle = self.arm.rect[2]
-                            start_count_t1 = True
+                            self.start_count_t1 = True
                             self.arm.world_X, self.arm.world_Y = np.mean(np.array(self.arm.center_list).reshape(count, 2), axis=0)
                             count = 0
                             self.arm.center_list = []
                             self.arm.start_pick_up = True
                     else:
                         t1 = time.time()
-                        start_count_t1 = True
+                        self.start_count_t1 = True
                         count = 0
                         self.arm.center_list = []
-        print("processing")
+
         return img
