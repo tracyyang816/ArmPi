@@ -61,6 +61,11 @@ class Arm():
         self.__isRunning = False
         print("ColorTracking Exit")
 
+    def initMove(self):
+        Board.setBusServoPulse(1, self.servo1 - 50, 300)
+        Board.setBusServoPulse(2, 500, 500)
+        AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
+
     
     def set_rgb(color):
         if color == "red":

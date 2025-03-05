@@ -35,12 +35,6 @@ class Control():
             Board.RGB.setPixelColor(1, Board.PixelColor(0, 0, 0))
             Board.RGB.show()
 
-
-
-    def initMove(self):
-        Board.setBusServoPulse(1, self.servo1 - 50, 300)
-        Board.setBusServoPulse(2, 500, 500)
-        AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
     
     def setBuzzer(self, timer):
         Board.setBuzzer(0)
