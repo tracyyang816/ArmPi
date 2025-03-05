@@ -104,4 +104,5 @@ class Perception():
                         start_count_t1 = True
                         count = 0
                         self.arm.center_list = []
+        print("processing")
         return img
