@@ -28,6 +28,7 @@ if __name__ == '__main__':
     my_camera.camera_open()
     while True:
         img = my_camera.frame
+        print("img not none, debug")
         if img is not None:
             frame = img.copy()
             Frame = perception_mod.process_frame(frame)
