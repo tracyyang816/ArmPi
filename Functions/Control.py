@@ -145,7 +145,10 @@ def main():
     motion.start()
 
     while True:
+
         frame_labelled, position_dictionary = perception.run()
+
+        print(position_dictionary)
         if frame_labelled is None:
             time.sleep(0.01)
             continue
