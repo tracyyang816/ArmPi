@@ -15,7 +15,7 @@ from ArmIK import ArmMoveIK
 import HiwonderSDK.Board as Board
 from CameraCalibration.CalibrationConfig import *
 from Perception import Perception
-from Control_Class import Control
+
 
 
 class Control():
@@ -68,7 +68,7 @@ class Control():
 
 
         if task == "sort":
-            if((self.target_color == "None") or (position_vector is None)):
+            if self.target_color == "None" or position_vector is None:
                 return
             # parse the position vector
             world_X, world_Y = np.array(position_vector[0]) + self.offset_world_xy
@@ -79,7 +79,7 @@ class Control():
             home_X, home_Y, home_Z = self.coordinate[self.target_color]
         
         elif task == "stack":
-            if((self.stack_idx >= 3) or (self.stack_idx < 0) or (position_vector is None)):
+            if self.stack_idx >= 3 or self.stack_idx < 0 or position_vector is None:
                 return
             # parse the position vector 
             world_X, world_Y = np.array(position_vector[0]) + self.offset_world_xy
@@ -108,13 +108,7 @@ class Control():
 
 
         Board.setBusServoPulse(2, 500, int(500/speed))
-        servos, alpha, movetime_ms = self.AK.setPitchRangeMoving(
-            coordinate_data = (world_X, world_Y, 12), 
-            alpha = -90, 
-            alpha1 = -90, 
-            alpha2 = 0, 
-            movetime = int(1000/speed)
-        )
+        servos, alpha, movetime_ms = self.AK.setPitchRangeMoving((world_X, world_Y, 12), -90, -90, 0, int(1000/speed))
         time.sleep(movetime_ms/1000)
 
         servos, alpha, movetime_ms = self.AK.setPitchRangeMoving((home_X, home_Y, 12), -90, -90, 0, int(1500/speed))
@@ -173,4 +167,6 @@ def main(task):
         # execute sort or stack task 
         motion.run_stack(task, position_dictionary[color], speed=3.5)
 
-    
+if __name__ == "__name__":
+    task = input("Task: ")
+    main(task)
