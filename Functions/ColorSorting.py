@@ -296,11 +296,15 @@ def run(img):
                 closed = cv2.morphologyEx(opened, cv2.MORPH_CLOSE, np.ones((6,6),np.uint8)) #闭运算
                 contours = cv2.findContours(closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[-2]  #找出轮廓
                 areaMaxContour, area_max = getAreaMaxContour(contours)  #找出最大轮廓
+
+
+                # DIFFERENCE FOR SORTING
                 if areaMaxContour is not None:
                     if area_max > max_area:#找最大面积
                         max_area = area_max
                         color_area_max = i
                         areaMaxContour_max = areaMaxContour
+
         if max_area > 2500:  # 有找到最大面积
             rect = cv2.minAreaRect(areaMaxContour_max)
             box = np.int0(cv2.boxPoints(rect))
@@ -317,6 +321,8 @@ def run(img):
             
             distance = math.sqrt(pow(world_x - last_x, 2) + pow(world_y - last_y, 2)) #对比上次坐标来判断是否移动
             last_x, last_y = world_x, world_y
+
+            # DIFFERENCE FOR SORTING 
             if not start_pick_up:
                 if color_area_max == 'red':  #红色最大
                     color = 1
