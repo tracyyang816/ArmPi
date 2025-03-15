@@ -133,11 +133,7 @@ class Control():
         time.sleep(movetime_ms/1000)
 
 
-
-
-def main():
-    print("debug")
-    task = sys.argv[1:]
+def main(task):
 
     my_camera = Camera.Camera()
     my_camera.camera_open()
@@ -170,4 +166,5 @@ def main():
         motion.run(task, position_dictionary[color], speed=3.5)
 
 if __name__ == "__main__":
-    main()
+    task = sys.argv[1:]
+    main(task)
