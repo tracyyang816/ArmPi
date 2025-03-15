@@ -19,7 +19,7 @@ from Perception import Perception
 
 
 class Control():
-    def __init__(self, reset_time_ms=3000):
+    def __init__(self, reset_time_ms=6000):
         self.reset_time_ms = reset_time_ms # reset speed
         self.cube_grab_from_bottom_cm = 1.0 # how far from the ground is the cube
         self.cube_height_cm = 3.0 # coordinates for stacking 
