@@ -170,6 +170,7 @@ def main():
         
         # execute sort or stack task 
         motion.run(task, position_dictionary[color], speed=3.5)
+        motion._reset()
 
 if __name__ == "__main__":
     main()
