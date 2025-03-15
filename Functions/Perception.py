@@ -115,7 +115,6 @@ class Perception():
         else:
             position_vector = None
         
-        print(position_vector)
         return img, position_vector
 
 

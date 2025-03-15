@@ -139,14 +139,14 @@ def main():
 
     my_camera = Camera.Camera()
     my_camera.camera_open()
-    perception = Perception(my_camera.frame)
-    perception.color_list = ['red', 'green', 'blue']
+    
     
     motion = Control(reset_time_ms=650)
     motion.start()
 
     while True:
-        
+        perception = Perception(my_camera.frame)
+        perception.color_list = ['red', 'green', 'blue']
         frame_labelled, position_dictionary = perception.run()
 
         print(position_dictionary)
