@@ -112,7 +112,7 @@ class Perception():
             roi = getROI(box) # get the region of interest (the large white box )
             get_roi = True
             # compute the position vector
-            position_vector = self._get_position_vector(rect, roi)
+            position_vector = self.get_position_vec(rect, roi)
             # draw the bounding box on the image
             self.draw_bb_on_image(img, box, position_vector, color)
         
