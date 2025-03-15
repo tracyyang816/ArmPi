@@ -136,6 +136,7 @@ class Control():
 
 
 def main():
+    print("debug")
     task = sys.argv[1:]
 
     my_camera = Camera.Camera()
