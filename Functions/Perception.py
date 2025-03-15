@@ -102,9 +102,9 @@ class Perception():
 
 
     def run_color(self, img, color):
-        preprocessed_img = self._preprocess_img(img.copy()) # # preproccess the image to be better suited for color detection
-        img_color_mask = self._get_img_color_mask(preprocessed_img, color) # # get the mask using the specific color from the pre-processed image
-        areaMaxContour, area_max = self._get_largest_area_contour(img_color_mask) # get the max contour for the mask
+        preprocessed_img = self.process_frame(img.copy()) # # preproccess the image to be better suited for color detection
+        img_color_mask = self.get_img_color_mask(preprocessed_img, color) # # get the mask using the specific color from the pre-processed image
+        areaMaxContour, area_max = self.get_largest_area_contour(img_color_mask) # get the max contour for the mask
         
         if area_max > 2500:  # we did find the largest contour!
             rect = cv2.minAreaRect(areaMaxContour)
