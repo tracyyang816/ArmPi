@@ -4,7 +4,6 @@ sys.path.append('/home/pi/ArmPi/')
 
 import cv2 
 import math 
-from Arm import Arm
 import numpy as np
 import time
 import Camera
