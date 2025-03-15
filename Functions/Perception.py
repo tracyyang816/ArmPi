@@ -48,7 +48,6 @@ class Perception():
 
     
     def process_frame(self, img):
-        print("processing")
         img_copy = img.copy()
         img_h, img_w = img.shape[:2]
         cv2.line(img, (0, int(img_h / 2)), (img_w, int(img_h / 2)), (0, 0, 200), 1)
