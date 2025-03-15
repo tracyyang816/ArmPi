@@ -166,7 +166,7 @@ def main():
         motion.target_color = color
         
         # execute sort or stack task 
-        motion.run_stack(task, position_dictionary[color], speed=3.5)
+        motion.run(task, position_dictionary[color], speed=3.5)
 
 if __name__ == "__main__":
     main()
