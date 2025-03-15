@@ -135,7 +135,8 @@ class Control():
 
 
 
-def main(task):
+def main():
+    task = sys.argv[1:]
 
     my_camera = Camera.Camera()
     my_camera.camera_open()
@@ -168,5 +169,4 @@ def main(task):
         motion.run_stack(task, position_dictionary[color], speed=3.5)
 
 if __name__ == "__name__":
-    task = input("Task: ")
     main(task)
