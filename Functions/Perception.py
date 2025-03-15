@@ -108,7 +108,7 @@ class Perception():
         
         if area_max > 2500:  # we did find the largest contour!
             rect = cv2.minAreaRect(areaMaxContour)
-            box = np.int0(cv2.boxPoints(self.arm.rect))
+            box = np.int0(cv2.boxPoints(rect))
             roi = getROI(box) # get the region of interest (the large white box )
             get_roi = True
             # compute the position vector
