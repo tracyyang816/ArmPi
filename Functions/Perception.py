@@ -115,6 +115,7 @@ class Perception():
         else:
             position_vector = None
         
+        print(position_vector)
         return img, position_vector
 
 
@@ -146,7 +147,6 @@ def main():
             time.sleep(0.01) # stall a bit
             continue
 
-        
         cv2.imshow('Frame', frame_labelled)
         key = cv2.waitKey(1) # press [ESC] to quit)
         if key == 27:
