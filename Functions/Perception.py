@@ -27,6 +27,7 @@ class Perception():
         'black': (0, 0, 0),
         'white': (255, 255, 255),
         }
+        self.color_list = []
 
     def set_targetColor(self, target_color):
         self.target_color = target_color
@@ -147,13 +148,10 @@ def main():
 
     while True:
         img = my_camera.frame
-        perception = Perception(img)
-
-        # get the labelled frame and position dictionary from running the perception object
-        frame_labelled, position_dictionary = perception.run()
-        # restart the loop if the frame was not captured
-        if frame_labelled is None:
-            # stall a bit to not use resources
+        perception = Perception(img) 
+        perception.color_list = ['red', 'grenn', 'blue']
+        frame_labelled, position_dictionary = perception.run() # restart the loop if the frame was not captured
+        if frame_labelled is None:  # stall a bit to not use resources
             time.sleep(0.01)
             continue
 
