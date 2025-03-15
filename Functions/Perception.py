@@ -149,7 +149,7 @@ def main():
     while True:
         img = my_camera.frame
         perception = Perception(img) 
-        perception.color_list = ['red', 'grenn', 'blue']
+        perception.color_list = ['red', 'green', 'blue']
         frame_labelled, position_dictionary = perception.run() # restart the loop if the frame was not captured
         if frame_labelled is None:  # stall a bit to not use resources
             time.sleep(0.01)
