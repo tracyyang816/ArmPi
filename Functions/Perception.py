@@ -1,4 +1,7 @@
 
+import sys
+sys.path.append('/home/pi/ArmPi/')
+
 import cv2 
 import math 
 from Arm import Arm
