@@ -125,7 +125,7 @@ class Perception():
             for color in self.color_list: # for each object 
                 
                 frame, position = self.run_color(frame, color)
-                if(position is not None):
+                if position is not None :
                     position_dict[color] = position
 
         return frame, position_dict # return the labelled frame & position dict
