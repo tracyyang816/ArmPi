@@ -166,5 +166,5 @@ def main(task):
         motion.run(task, position_dictionary[color], speed=3.5)
 
 if __name__ == "__main__":
-    task = sys.argv[1:]
+    task = sys.argv[3:]
     main(task)
