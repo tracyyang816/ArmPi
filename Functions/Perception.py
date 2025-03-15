@@ -86,9 +86,8 @@ class Perception():
 
         width, height = rect[1]
         rotation_angle = rect[2]
-        # Define the position vector
-        position_vector = ((world_x, world_y), (width, height), rotation_angle)
-        # return the position vector
+
+        position_vector = ((world_x, world_y), (width, height), rotation_angle) # define position vector's  format
         return position_vector  
 
 
@@ -102,7 +101,7 @@ class Perception():
 
 
     def run_color(self, img, color):
-        preprocessed_img = self.process_frame(img.copy()) # # preproccess the image to be better suited for color detection
+        preprocessed_img = self.process_frame(img.copy()) # preproccess the image to be better suited for color detection
         img_color_mask = self.get_img_color_mask(preprocessed_img, color) # # get the mask using the specific color from the pre-processed image
         areaMaxContour, area_max = self.get_largest_area_contour(img_color_mask) # get the max contour for the mask
         
@@ -110,13 +109,11 @@ class Perception():
             rect = cv2.minAreaRect(areaMaxContour)
             box = np.int0(cv2.boxPoints(rect))
             roi = getROI(box) # get the region of interest (the large white box )
-            get_roi = True
-            # compute the position vector
+            # get_roi = True
             position_vector = self.get_position_vec(rect, roi)
-            # draw the bounding box on the image
-            self.draw_bb_on_image(img, box, position_vector, color)
+            self.draw_bb_on_image(img, box, position_vector, color) # draw bb
         
-        # if contour too small, specify a Null position vector
+        # if contour too small, null vector
         else:
             position_vector = None
         
@@ -126,22 +123,18 @@ class Perception():
     def run(self):
         position_dict = dict()
         frame = self.frame
-        # check if it is a valid frame
         if frame is not None:
-            # loop through each specified color
-            for color in self.color_list:
-                # get the labeled frame and position of the perception code for each object
+            for color in self.color_list: # for each object 
+                
                 frame, position = self.run_color(frame, color)
                 if(position is not None):
                     position_dict[color] = position
-        # return the labelled frame and position dictionary
-        return frame, position_dict
+
+        return frame, position_dict # return the labelled frame & position dict
 
 
             
-                
-
-# main function to test perception class
+            
 def main():
     my_camera = Camera.Camera()
     my_camera.camera_open()
@@ -150,9 +143,9 @@ def main():
         img = my_camera.frame
         perception = Perception(img) 
         perception.color_list = ['red', 'green', 'blue']
-        frame_labelled, position_dictionary = perception.run() # restart the loop if the frame was not captured
-        if frame_labelled is None:  # stall a bit to not use resources
-            time.sleep(0.01)
+        frame_labelled, position_dictionary = perception.run()
+        if frame_labelled is None:  # restart the loop if the frame was not captured
+            time.sleep(0.01) # stall a bit
             continue
 
         
@@ -161,42 +154,10 @@ def main():
         if key == 27:
             break
 
-    # Destroy the CV2 window
+
     cv2.destroyAllWindows()
 
 
-# Specify execution of main function when file is ran directly
 if __name__ == '__main__':
     main()
 
-
-'''
- 
-                distance = math.sqrt(pow(world_x - last_x, 2) + pow(world_y - last_y, 2)) # compare it to coordinates from the last time to determine if had moved 
-                last_x, last_y = world_x, world_y
-              
-                
-                # count the calculations 
-                if self.arm.action_finish:
-                    if distance < 0.3:
-                        self.arm.center_list.extend((world_x, world_y))
-                        count += 1
-                        if self.start_count_t1:
-                            self.start_count_t1 = False
-                            t1 = time.time()
-                        if time.time() - t1 > 1.5:
-                            self.arm.rotation_angle = self.arm.rect[2]
-                            self.start_count_t1 = True
-                            self.arm.world_X, self.arm.world_Y = np.mean(np.array(self.arm.center_list).reshape(count, 2), axis=0)
-                            count = 0
-                            self.arm.center_list = []
-                            self.arm.start_pick_up = True
-                    else:
-                        t1 = time.time()
-                        self.start_count_t1 = True
-                        count = 0
-                        self.arm.center_list = []
-
-        return img
-        
-        '''
